@@ -2,28 +2,28 @@
 
 ls /etc/yum.repos.d/salt-latest.repo
 if [ $? -eq 0 ]; then
-    echo "salt-minion rpm包已安裝"
+    echo "salt-minion rpm包已安装"
 else
-    echo "salt-minion rpm包未安裝"
+    echo "salt-minion rpm包未安装"
 fi
 
-echo "檢測salt rpm源"
+echo "检测salt rpm源"
 yum install https://repo.saltproject.io/yum/redhat/salt-repo-latest.el7.noarch.rpm -y
 if [ $? -eq 0 ]; then
     echo "添加salt rpm源 -> 成功"
 else
-    echo "添加salt rpm源 -> 失敗"
+    echo "添加salt rpm源 -> 失败"
 fi
 
-echo "安裝salt-minion"
-# 安裝salt-minion
+echo "安装salt-minion"
+# 安装salt-minion
 yum install salt-minion -y
 if [ $? -eq 0 ]; then
     echo "安裝salt-minion -> 成功"
-    # 清理yum緩存
-    echo "清理yum緩存"
+    # 清理yum缓存
+    echo "清理yum缓存"
     yum clean expire-cache
-    echo "啟動服務"
+    echo "启动服务"
 
     systemctl start salt-minion.service
     systemctl start salt-minion
@@ -31,11 +31,11 @@ if [ $? -eq 0 ]; then
     systemctl enable salt-minion.service
     systemctl enable salt-minion
 
-    echo "服務狀態:"
+    echo "服务状态:"
     service salt-minion status
 
 else
-    echo "安裝salt-minion -> 失敗"
+    echo "安装salt-minion -> 失败"
     exit 1
 fi
 
@@ -49,24 +49,24 @@ EOF
 if [ $? -eq 0 ]; then
     echo "修改salt-minion配置文件 -> 成功"
 else
-    echo "修改salt-minion配置文件 -> 失敗"
+    echo "修改salt-minion配置文件 -> 失败"
 fi
 
-# 重啓salt-minion
-echo "重啓salt-minion"
+# 重启salt-minion
+echo "重启salt-minion"
 systemctl restart salt-minion.service
 
 if [ $? -eq 0 ]; then
-    echo "重啓salt-minion -> 成功"
+    echo "重启salt-minion -> 成功"
 else
-    echo "重啓salt-minion -> 失敗"
+    echo "重启salt-minion -> 失败"
 fi
 
 salt-call test.ping
 if [ $? -ne 0 ]; then
-    echo "連接salt失敗"
+    echo "连接salt失败"
     exit
 else
-    echo "連接salt成功"
+    echo "连接salt成功"
 fi
 salt-call state.sls init.user.init
