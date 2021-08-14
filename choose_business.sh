@@ -52,7 +52,7 @@ while true; do
         ;;
     esac
 
-    echo "hostname: ${area}-${group}-$(sh covenIP.sh)" >/etc/hostname
-    cat >/etc/hostname
+    echo "${area}-${group}-$(sh covenIP.sh)" >/etc/hostname
+    cat /etc/hostname
     break
 done
