@@ -13,9 +13,8 @@ while true; do
         continue
     fi
 
-    echo "選擇要加入的資產組(選擇數字):"
-    echo "1.wbt \n2.gbt \n3.nbt \n4.bpt \n5.bdt \n6.video \n7.pbt"
-    read input
+    echo "1.wbt | 2.gbt | 3.nbt | 4.bpt | 5.bdt | 6.video | 7.pbt"
+    read -p "選擇要加入的資產組(選擇數字):" input
 
     case $input in
     1)
@@ -53,6 +52,7 @@ while true; do
         ;;
     esac
 
-    echo "hostname: ${area}-${group}-$(sh covenIP.sh)"
+    echo "hostname: ${area}-${group}-$(sh covenIP.sh)" >/etc/hostnamesal
+    cat >/etc/hostnamesal
     break
 done
